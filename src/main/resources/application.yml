@@ -10,8 +10,8 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/MetaSecurity?serverTimezone=Asia/Seoul
-    username: ${username}
+    url: jdbc:mysql://localhost:3306/metasecurity?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false
+    username: ${user}
     password: ${pw}
 
 #  mvc:
