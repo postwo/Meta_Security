@@ -1,14 +1,22 @@
 package com.example.springsecurity.controller;
 
+import com.example.springsecurity.model.User;
+import com.example.springsecurity.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller //view를 리턴 하겠다
+@RequiredArgsConstructor
 public class IndexController {
 
-    //localhost:8080
-    //localhost:8080
+    private final UserRepository userRepository; // 지금은 그냥 서비스없이 사용함 연습용이여서
+
+    private final BCryptPasswordEncoder passwordEncoder;
+
     @GetMapping({"","/"})
     public String index() {
 
@@ -34,22 +42,23 @@ public class IndexController {
     }
 
     //로그인은 지금 아무 설정도 안해서 스프링 시큐리티가 해당주소를 낚아챈다 - securityconfig 파일 생성 후 작동안함
-    @GetMapping("/login")
-    public @ResponseBody String login() {
-        return "login";
+    @GetMapping("/loginForm")
+    public String loginForm() {
+        return "loginForm";
     }
 
     //회원가입
-    @GetMapping("/join")
-    public @ResponseBody String join() {
-        return "join";
+    @GetMapping("/joinForm")
+    public String joinForm() {
+        return "joinForm";
     }
 
-    @GetMapping("/joinProc")
-    public @ResponseBody String joinProc() {
-        return "회원가입 완료됨";
+    @PostMapping("/join")
+    public String join(User user) {
+        user.setRole("ROLE_USER");
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return "redirect:/loginForm"; //
     }
-
-
 
 }
