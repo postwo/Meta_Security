@@ -3,6 +3,8 @@ package com.example.springsecurity.controller;
 import com.example.springsecurity.model.User;
 import com.example.springsecurity.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +60,21 @@ public class IndexController {
         user.setRole("ROLE_USER");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return "redirect:/loginForm"; //
+        return "redirect:/loginForm";
     }
 
+    //하나만 걸때 사용
+    @Secured("ROLE_ADMIN") // 이거는 특정 메서드에 간단하게 권한을 걸어버릴수 있는 어노테이션이다
+    @GetMapping("/info")
+    public @ResponseBody String info() {
+        return "개인정보";
+    }
+
+
+    //PreAuthorize 이거는 다중으로 권한을 걸고 싶을때 사용
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')") // 이 data라는 메서드가 실행하기 직전에 실행됨 , ROLE_ADMIN 이렇게 작성하면 동작을 안한다 hasRole로 감싸줘야 한다
+    @GetMapping("/data")
+    public @ResponseBody String data() {
+        return "데이터정보";
+    }
 }
