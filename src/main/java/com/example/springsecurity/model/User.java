@@ -26,6 +26,10 @@ public class User {
     private String email;
     private String role; //ROLE_USER, ROLE_ADMIN
 
+    //oauth 회원가입 유저 구분하기 위해 추가
+    private String provider; // 어떤 oauth로 로그인했는지 구분 용도 = naver,kakao
+    private String providerId; // 구글 에서 사용하고 있는 아이디 값 추가 == sub
+
     @CreationTimestamp
     private Timestamp createDate;
 }
