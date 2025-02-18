@@ -40,6 +40,24 @@ public class SecurityConfig {
                         // 2. 니가 loginForm으로 와서 로그인을 하면 디폴트페이지로 이동시켜 줄건데 근데 니가 어느 특정페이지로 접속할려고 로그인을 하면 그페이지로 보내줄게
                         // 3. ex) http://localhost:8080/user 이렇게 페이지로 접속했는데 로그인페이지가 리턴되고 거기서 로그인을 하면 user 페이지로 다시 이동시켜줄게 라는 뜻이다
                 )
+                .oauth2Login(oauth2 -> oauth2 //
+                        .loginPage("/loginForm") // OAuth2 로그인도 커스텀 로그인 페이지 사용 //인증되지 않은 사용자는 /loginForm으로 이동
+                        // 밑의 두개는 지금 크게 중요 하지 않음
+//                        .defaultSuccessUrl("/") // 로그인 성공 시 이동할 기본 페이지
+//                        .failureUrl("/loginForm?error") // 로그인 실패 시 이동할 페이지
+
+
+                        /*Spring Security의 기본 동작
+
+                        .oauth2Login().loginPage("/loginForm")을 설정하면 인증되지 않은 사용자는 /loginForm으로 이동합니다.
+                        하지만, OAuth2 로그인을 진행할 경우, 로그인 버튼을 클릭하면 Spring Security가 자동으로 구글 로그인 URL로 리디렉션합니다.
+                        결과적으로, 구글 계정 선택 화면으로 이동하게 됩니다.
+                        OAuth2 로그인 흐름
+
+                        /loginForm 페이지에서 사용자가 "구글 로그인" 버튼을 클릭하면 Spring Security는 자동으로 구글의 로그인 페이지(https://accounts.google.com/...)로 리디렉션합니다.
+                        사용자가 구글 로그인 후, 설정된 리다이렉트 URL(예: /login/oauth2/code/google)로 다시 돌아오고, 로그인이 완료됩니다.
+                        */
+                )
                 .build();
     }
 }
