@@ -20,6 +20,7 @@ public class PrincipalDetailsService implements UserDetailsService {
     // String username 을 다르게 하고 싶으면 프론트에서 받아오는 파라미터 변수랑 일치 시켜줘야 한다
     // loginform.html   <input type="text" name="username" placeholder="Username"/> <br/> 여기에 있는 name 부분이랑 일치 해야한다(중요)
     // 만약에 username 말고 다른걸 쓰고 싶으면  securityconfig usernameParameter에 변경 해주면 된다
+    // 함수 종료시 @AuthenticationPrincipal 어노테이션이 만들어진다
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

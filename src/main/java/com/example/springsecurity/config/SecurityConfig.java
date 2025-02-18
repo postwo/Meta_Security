@@ -4,6 +4,7 @@ import com.example.springsecurity.config.oauth.PrincipalOauth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Autowired
+    @Lazy //@Lazy 어노테이션을 사용하여 빈의 초기화를 지연시키면 상호 의존성 문제를 해결할 수 있습니다.
     private PrincipalOauth2UserService principalOauth2UserService;
 
     // Bean = 해당 메서드의 리턴되는 오브젝트를 ioc로 등록해준다
