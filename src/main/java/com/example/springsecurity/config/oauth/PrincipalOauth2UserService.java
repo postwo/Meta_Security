@@ -44,7 +44,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         // 이걸 굳이 만들필요는 없다 그냥 연습용이다
         //oauth 로그인 사용자에게서 회원정보를 추출해서 회원가입을 강제로 진행 oauth로 로그인은하면 비밀번호도 필요없고 username도 필요없는데 그냥 만들어 주는거다
-        String provider = userRequest.getClientRegistration().getClientId();// google
+        String provider = userRequest.getClientRegistration().getRegistrationId();// google
         String providerId = oAuth2User.getAttribute("sub"); //google 의 id값
         String username = provider+"_"+providerId;// google_10412940128498244921 이렇게 된다 그럼 중복이 될리가 없다
         String password = bCryptPasswordEncoder.encode("겟인데어");
