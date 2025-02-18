@@ -56,3 +56,14 @@ client-secret: ${googlePw} //사용자 인증 정보에 pw가 있다
 scope:
 - email
 - profile
+
+### 스프링 시큐리티
+서버 자체 세션 영역 안의 시큐리티가 관리하는 세션 영역 안의 타입은 Authentication 밖의 없다 
+그러므로 필요할때 마다 controlle에서 DI를 할 수 있다 Authentication 객체 안의 들어갈수 있는 두개의 타입이 있다 1.UserDetails 2.Oauth2User 타입이렇게 두가지가 있다 
+정리: 시큐리티가 들고있는 세션에는 무조건 Authentication객체만 들어 갈 수 있다 Authentication객체가 들어가는 순간 로그인이 된거다 
+언제 UserDetails와 Oauth2User가 만들어지냐면 UserDetails 는 일반로그인할때 Authentication객체에 들어간다 Oauth2User는 구글,네이버 로그인을 하게 되면 Authentication객체에 들어간다
+
+예를 들어 유저 정보가 필요한데 컨트롤러에서 받을수 있는거는 UserDetails 또는 Oauth2User 둘중의 하나만 넣을 수 있다 하지만 두개다 사요할때 문제가 발생하는데 이거를 해결하기 위해서
+어떠한 클래스(이게 부모클래스)를 만들거나 내가 기본적으로 사용하기 위해 만든 principalDetails에 두개다 구현해서 그거를 Authentication객체에 담아주면 가져와서 두개다 사용 할 수 있다 
+
+9강 부터 듣기 

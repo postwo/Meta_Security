@@ -2,11 +2,14 @@ package com.example.springsecurity.config.auth;
 
 
 import com.example.springsecurity.model.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 
 // 시큐리티가 /login 주소 요청이 오면 낚아채서 로그인을 진행시킨다
@@ -19,7 +22,8 @@ import java.util.Collection;
 // 그리고 Authentication 객체 안의 저장할 user 정보는 UserDetails 타입 이여야 한다
 
 // 지금 메모리에 안띄우고 나중에 new로 메모리에 띄워줄거다
-public class PrincipalDetails implements UserDetails {
+@Data // 이걸 붙여줌으로 get을 통해서 user를 가지고 올 수 있다
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user; //콤포지션
 
@@ -78,5 +82,17 @@ public class PrincipalDetails implements UserDetails {
         // 1년 동안 회원이 로그인을 안하면 휴먼걔정으로 처리
         // 현재시간 - 로그인한시간  => 1년을 초과하면 return false로 설정
         return true ;
+    }
+
+    // OAuth2User를 구현하면 이렇게 두가지가 추가된다
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return Map.of();
+    }
+
+    @Override
+    public String getName() {
+        return "";
     }
 }
